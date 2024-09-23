@@ -36,9 +36,18 @@ else:
     DEBUG = False
     
     
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['chatrealtime.up.railway.app', 'localhost', '127.0.0.1']
 
-POSTGRES_LOCALLY = True
+CORS_ALLOWED_ORIGINS = [
+    'https://chatrealtime.up.railway.app',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://chatrealtime.up.railway.app",
+]
+
+
+POSTGRES_LOCALLY = False
 
 
 # Application definition
