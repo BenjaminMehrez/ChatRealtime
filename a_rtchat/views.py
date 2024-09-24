@@ -38,12 +38,14 @@ def chat_view(request, chatroom_name='public-chat'):
         'chat_messages': chat_messages,
         'form': form,
         'other_user' : other_user,
-        'chatroom_name' : chatroom_name
+        'chatroom_name' : chatroom_name,
+        'chat_group' : chat_group,
     }
     
     return render(request, 'a_rtchat/chat.html', context)
 
 
+@login_required
 def get_or_create_chatroom(request, username):
     if request.user.username == username:
         return redirect('home')
@@ -59,3 +61,20 @@ def get_or_create_chatroom(request, username):
     chatroom = ChatGroup.objects.create( is_private = True )
     chatroom.members.add(other_user, request.user)   
     return redirect('chatroom', chatroom.group_name)
+
+
+@login_required
+def create_groupchat(request):
+    form = NewGroupForm()
+    
+    if request.method == 'POST':
+        form = NewGroupForm(request.POST)
+        if form.is_valid():
+            new_groupchat = form.save(commit=False)
+            new_groupchat.admin = request.user
+            new_groupchat.save()
+            new_groupchat.members.add(request.user)
+            return redirect('chatroom', new_groupchat.group_name)
+        
+        
+    return render(request, 'a_rtchat/create_groupchat.html', {'form': form})
