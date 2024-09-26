@@ -37,12 +37,13 @@ class GroupMessage(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     
-    @property
-    def filename(self):
-        if self.file:
-            return os.path.basename(self.file.name)
-        else:
-            return None
+    if ENVIRONMENT == 'development':
+        @property
+        def filename(self):
+            if self.file:
+                return os.path.basename(self.file.name)
+            else:
+                return None
     
     
     def __str__(self):
