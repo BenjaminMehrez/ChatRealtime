@@ -9,9 +9,9 @@ from .models import *
 class ChatroomConsumer(WebsocketConsumer):
     def connect(self):
         self.user = self.scope['user']
-        self.chatroom_name = self.scope['url_route']['kwargs']['chatroom_name']
+        self.chatroom_name = self.scope['url_route']['kwargs']['chatroom_name'] 
         self.chatroom = get_object_or_404(ChatGroup, group_name=self.chatroom_name)
-
+        
         async_to_sync(self.channel_layer.group_add)(
             self.chatroom_name, self.channel_name
         )
@@ -20,7 +20,7 @@ class ChatroomConsumer(WebsocketConsumer):
         if self.user not in self.chatroom.users_online.all():
             self.chatroom.users_online.add(self.user)
             self.update_online_count()
-
+        
         self.accept()
 
     def disconnect(self, close_code):
@@ -128,7 +128,7 @@ class OnlineStatusConsumer(WebsocketConsumer):
         
     def online_status_handler(self, event):
         online_users = self.group.users_online.exclude(id=self.user.id)
-        public_chat_users = ChatGroup.objects.get(group_name='public-chat').users_online.exclude(id=self.user.id)
+        public_chat_users = ChatGroup.objects.get(group_name=self.group_name).users_online.exclude(id=self.user.id)
         
         my_chats = self.user.chat_groups.all()
         private_chats_with_users = [chat for chat in my_chats.filter(is_private=True) if chat.users_online.exclude(id=self.user.id)]
