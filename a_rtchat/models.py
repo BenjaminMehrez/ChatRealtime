@@ -1,6 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 import shortuuid
+import os
+from PIL import Image
+
+from environ import Env
+env = Env()
+Env.read_env()
+ENVIRONMENT = env('ENVIRONMENT', default='production')
+if ENVIRONMENT == 'production':
+    from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -20,13 +29,36 @@ class ChatGroup(models.Model):
 class GroupMessage(models.Model):
     group = models.ForeignKey(ChatGroup, related_name='chat_messages', on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.CharField(max_length=300)
+    body = models.CharField(max_length=300, blank=True, null=True)
+    if ENVIRONMENT == 'production':
+        file = CloudinaryField(null=True, blank=True)
+    else:
+        file = models.FileField(upload_to='files/', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     
     
-    def __str__(self):
-        return f'{self.author.username} : {self.body}'
+    @property
+    def filename(self):
+        if self.file:
+            return os.path.basename(self.file.name)
+        else:
+            return None
     
+    
+    def __str__(self):
+        if self.body:
+            return f'{self.author.username} : {self.body}'
+        elif self.file:
+            return f'{self.author.username} : {self.filename}'
     
     class Meta:
         ordering = ['-created']
+        
+    @property
+    def is_image(self):
+        try:
+            image = Image.open(self.file)
+            image.verify()
+            return True
+        except:
+            return False
