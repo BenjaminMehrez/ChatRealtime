@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 import shortuuid
 import os
 from PIL import Image
+import cloudinary.uploader
 
 from environ import Env
 env = Env()
@@ -37,29 +38,27 @@ class GroupMessage(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     
-    if ENVIRONMENT == 'development':
-        @property
-        def filename(self):
-            if self.file:
-                return os.path.basename(self.file.name)
-            else:
-                return None
-    
-    
-    def __str__(self):
-        if self.body:
-            return f'{self.author.username} : {self.body}'
-        elif self.file:
-            return f'{self.author.username} : {self.filename}'
+
+    @property
+    def filename(self):
+        if self.file:
+            # Subir el archivo a Cloudinary
+            result = cloudinary.uploader.upload(self.file)
+            # El nombre original del archivo
+            original_filename = os.path.basename(self.file.name)
+            # Retornar la URL pública del archivo en Cloudinary
+            return result['secure_url']
+        else:
+            return None
     
     class Meta:
         ordering = ['-created']
         
-    @property
+    @property    
     def is_image(self):
         try:
-            image = Image.open(self.file)
+            image = Image.open(self.file) 
             image.verify()
-            return True
+            return True 
         except:
             return False
