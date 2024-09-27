@@ -42,13 +42,14 @@ class GroupMessage(models.Model):
     @property
     def filename(self):
         if self.file:
-            # Subir el archivo a Cloudinary
-            result = cloudinary.uploader.upload(self.file)
-            # El nombre original del archivo
-            original_filename = os.path.basename(self.file.name)
-            # Retornar la URL pública del archivo en Cloudinary
-            return result['secure_url']
+            try:
+                # En producción o desarrollo, obtenemos la URL del archivo
+                return self.file.url
+            except Exception as e:
+                print(f"Error obteniendo la URL del archivo: {str(e)}")
+                return None
         else:
+            print("No se proporcionó ningún archivo.")
             return None
     
     class Meta:
