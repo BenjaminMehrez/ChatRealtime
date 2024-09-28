@@ -43,7 +43,7 @@ class GroupMessage(models.Model):
     def filename(self):
         if self.file:
             try:
-                # En producción o desarrollo, obtenemos la URL del archivo
+                # En producción o desarrollo, obtenemos la URL del archivo en lugar del 'name'
                 return self.file.url
             except Exception as e:
                 print(f"Error obteniendo la URL del archivo: {str(e)}")
@@ -57,9 +57,8 @@ class GroupMessage(models.Model):
         
     @property    
     def is_image(self):
-        try:
-            image = Image.open(self.file) 
-            image.verify()
-            return True 
-        except:
-            return False
+        if self.file:
+            # Para Cloudinary, verificamos la extensión desde la URL en lugar de intentar abrir el archivo
+            file_extension = os.path.splitext(self.file.url)[1].lower()
+            return file_extension in ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']
+        return False
