@@ -1628,7 +1628,7 @@ p {
 
 .allauth .helptext {
   margin-top: 1rem;
-  display: none;
+  display: block;
 }
 
 label {

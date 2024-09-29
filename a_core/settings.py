@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'admin_honeypot',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     "django_htmx",
     'a_home',
     'a_users',
