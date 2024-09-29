@@ -18,10 +18,11 @@ def profile_view(request, username=None):
             profile = request.user.profile
         except:
             return redirect_to_login(request.get_full_path())
+        
     return render(request, 'a_users/profile.html', {'profile': profile})
     
     
-@login_required    
+@login_required
 def profile_edit_view(request):
     form = ProfileForm(instance=request.user.profile)
     
@@ -29,15 +30,20 @@ def profile_edit_view(request):
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
-        
+            
+            if request.user.emailaddress_set.get(primary=True).verified:
+                return redirect('profile')
+            else:
+                return redirect('home')
+                
         
     if request.path == reverse('profile-onboarding'):
-        onboarding = True
+        template = 'a_users/profile_onboarding.html'
     else:
-        onboarding = False
+        template = 'a_users/profile_edit.html'
         
-    return render(request, 'a_users/profile_edit.html', {'onboarding': onboarding})
+        
+    return render(request, template, {'form': form})
 
 
 

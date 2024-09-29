@@ -46,6 +46,11 @@ CSRF_TRUSTED_ORIGINS = [
     "https://chatrealtime.up.railway.app",
 ]
 
+INTERNAL_IPS = (
+    '127.0.0.1',
+    'localhost:8000'
+)
+
 
 POSTGRES_LOCALLY = False
 
@@ -62,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
     'django.contrib.sites',
+    'admin_honeypot',
     'allauth',
     'allauth.account',
     "django_htmx",
@@ -210,3 +216,5 @@ ACCOUNT_SIGNUP_REDIRECT_URL = "{% url 'account_signup' %}?next={% url 'profile-o
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_USERNAME_BACKLIST = [ 'admin', 'accounts', 'profile', 'theboss']
