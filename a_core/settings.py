@@ -36,14 +36,17 @@ else:
     DEBUG = False
     
     
-ALLOWED_HOSTS = ['chatrealtime.up.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['chatrealtime.up.railway.app', 'localhost', '127.0.0.1','chatrealtime-staging.up.railway.app']
 
 CORS_ALLOWED_ORIGINS = [
     'https://chatrealtime.up.railway.app',
+    'https://chatrealtime-staging.up.railway.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://chatrealtime.up.railway.app",
+    'https://chatrealtime-staging.up.railway.app',
+
 ]
 
 INTERNAL_IPS = (
