@@ -16,7 +16,7 @@
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <link rel="stylesheet" href="{% if debug %}{% static 'css/style.css' %}{% else %}{% static 'css/style.min.css' %}{% endif %}">
 </head>
-<body class="bg-gray-300" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="{% block class %}{% endblock %}">
+<body class="bg-gray-900" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="{% block class %}{% endblock %}">
 	
     {% include 'includes/messages.html' %}
 
