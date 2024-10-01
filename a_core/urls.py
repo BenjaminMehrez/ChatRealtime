@@ -29,6 +29,7 @@ urlpatterns = [
     path('',  include('a_rtchat.urls')),
     path('profile/', include('a_users.urls')),
     path('@<username>/', profile_view, name='profile'),
+    path('_/', include('a_landingpages.urls')),
  
 ]
 

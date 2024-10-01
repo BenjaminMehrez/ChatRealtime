@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatRealTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .edu {
+                font-family: "Edu AU VIC WA NT Guides", cursive;
+                font-optical-sizing: auto;
+                font-weight: 400;
+                font-style: normal;
+            }
+    </style>
+</head>
+<body class="bg-gray-800">
+
+    <div class="flex items-center justify-between h-20 ml-10">
+        <logo>
+            <a class="flex items-center gap-1" href="/">
+                <img class="w-6 mr-1 -mt-1" src="{% static 'images/logo.svg' %}">
+                <span class="text-lg font-bold text-white">ChatRealTime</span>
+            </a>
+        </logo>
+    </div>
+
+    <content class="block my-32 px-6 text-center">
+        {% block content %}
+        {% endblock %}
+    </content>
+
+
+</body>
+</html>

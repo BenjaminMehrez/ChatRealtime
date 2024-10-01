@@ -56,10 +56,6 @@ INTERNAL_IPS = (
     'localhost:8000'
 )
 
-
-POSTGRES_LOCALLY = False
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,7 +76,7 @@ INSTALLED_APPS = [
     'a_users',
     'a_rtchat',
     'a_features',
-    
+    'a_landingpages',
 ]
 
 SITE_ID=1
@@ -96,6 +92,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    'a_landingpages.middleware.landingpage_middleware',
 ]
 
 
@@ -145,17 +142,19 @@ else:
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-if ENVIRONMENT == 'development':
+POSTGRES_LOCALLY = False
+
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
-    }
-else:
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
     }
 
 
