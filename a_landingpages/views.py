@@ -5,16 +5,13 @@ from .models import LandingPage
 
 # Create your views here.
 
-
-def maintenance_page(request):
+def maintenance_page(request):       
     return render(request, 'a_landingpages/maintenance.html')
 
-
-
-def locked_page(request):
-    form = AccessForm()
+def locked_page(request): 
+    form = AccessForm() 
     
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AccessForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get('password')
@@ -25,4 +22,5 @@ def locked_page(request):
                     return redirect('home')
             except:
                 pass
+          
     return render(request, 'a_landingpages/locked.html', {'form': form})

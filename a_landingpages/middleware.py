@@ -1,17 +1,17 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import LandingPage
 from django.conf import settings
+from .models import LandingPage
 
 def landingpage_middleware(get_response):
     def middleware(request):
-        
+
         if page_is_enabled('Maintenance'):
             if request.path != reverse('maintenance'):
                 if '/theboss' not in request.path:
                     if settings.STAGING != 'True':
                         return HttpResponseRedirect(reverse('maintenance'))
-        
+                    
         if page_is_enabled('Staging'):
             if request.path != reverse('locked'):
                 if '/theboss' not in request.path:
@@ -19,7 +19,7 @@ def landingpage_middleware(get_response):
                         if 'staging_access' not in request.session:
                             return HttpResponseRedirect(reverse('locked'))
         
-        response = get_response(request)
+        response = get_response(request)    
         return response
     
     return middleware

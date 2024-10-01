@@ -4,7 +4,7 @@ from .models import LandingPage
 
 # Register your models here.
 
-class LangingPageAdmin(admin.ModelAdmin):
+class LandingPageAdmin(admin.ModelAdmin):
     list_display = ('name', 'is_enabled', 'access_code')
-    
-admin.site.register(LandingPage, LangingPageAdmin)
+
+admin.site.register(LandingPage, LandingPageAdmin)
