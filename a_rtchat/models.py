@@ -4,12 +4,10 @@ import shortuuid
 import os
 from PIL import Image
 import cloudinary.uploader
+from django.conf import settings
 
-from environ import Env
-env = Env()
-Env.read_env()
-ENVIRONMENT = env('ENVIRONMENT', default='production')
-if ENVIRONMENT == 'production':
+
+if settings.ENVIRONMENT == 'production':
     from cloudinary.models import CloudinaryField
 
 # Create your models here.
@@ -31,7 +29,7 @@ class GroupMessage(models.Model):
     group = models.ForeignKey(ChatGroup, related_name='chat_messages', on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.CharField(max_length=300, blank=True, null=True)
-    if ENVIRONMENT == 'production':
+    if settings.ENVIRONMENT == 'production':
         file = CloudinaryField(null=True, blank=True)
     else:
         file = models.FileField(upload_to='files/', blank=True, null=True)

@@ -1,12 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.templatetags.static import static
-from environ import Env
-env = Env()
-Env.read_env()
+from django.conf import settings
 
-ENVIRONMENT = env('ENVIRONMENT', default='production')
-if ENVIRONMENT == 'production':
+
+if settings.ENVIRONMENT == 'production':
     from cloudinary.models import CloudinaryField
 
 # Create your models here.
@@ -14,7 +12,7 @@ if ENVIRONMENT == 'production':
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    if ENVIRONMENT == 'production':
+    if settings.ENVIRONMENT == 'production':
         image = CloudinaryField(null=True, blank=True)
     else:
         image = models.ImageField(upload_to='avatars/', null=True, blank=True) # blank signify that can is empty, null can save something empty

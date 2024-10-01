@@ -15,9 +15,12 @@ from pathlib import Path
 from environ import Env
 env = Env()
 Env.read_env()
-
-
 ENVIRONMENT = env('ENVIRONMENT', default='production')
+
+
+# FEATURE TOGGLE
+DEVELOPER = env('DEVELOPER', default='')
+STAGING = env('STAGING', default='False')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,6 +79,7 @@ INSTALLED_APPS = [
     'a_home',
     'a_users',
     'a_rtchat',
+    'a_features',
     
 ]
 
