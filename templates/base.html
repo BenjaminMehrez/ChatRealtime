@@ -14,10 +14,11 @@
     <meta name="author" content="Benjamin Mehrez">
 
     <meta property="og:url" content="http://{{ request.META.HTTP_HOST }}{{ request.path }}">
+    <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og-caption %}ChatRealTime{% endblock %}">
     <meta property="og:description" content="chatrealtime with friends">
-    <meta property="og:image" content="http://{{ request.META.HTTP_HOST }}{% static 'images/logo1200px.svg' %}">
-    <meta name="twitter:image" content="http://{{ request.META.HTTP_HOST }}{% static 'images/logo600px.svg' %}">
+    <meta property="og:image" content="{% block og-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/logo1200px.svg' %}{% block og-image %}">
+    <meta name="twitter:image" content="{% block tw-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/logo600px.svg' %}{% block og-image %}">
     
 
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
