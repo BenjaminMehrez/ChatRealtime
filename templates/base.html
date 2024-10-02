@@ -17,8 +17,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og-caption %}ChatRealTime{% endblock %}">
     <meta property="og:description" content="chatrealtime with friends">
-    <meta property="og:image" content="{% block og-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/logo1200px.svg' %}{% block og-image %}">
-    <meta name="twitter:image" content="{% block tw-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/logo600px.svg' %}{% block og-image %}">
+    <meta property="og:image" content="{% block og-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/logo1200px.svg' %}{% endblock %}">
+    <meta name="twitter:image" content="{% block tw-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/logo600px.svg' %}{% endblock %}">
     
 
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
