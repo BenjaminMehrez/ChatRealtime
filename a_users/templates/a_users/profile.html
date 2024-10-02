@@ -1,6 +1,8 @@
 {% extends 'layouts/box.html' %}
 
 {% block title %}{{ profile.user.username }} | {% endblock %}
+{% block og-image %}{{ profile.avatar }}{% endblock %}
+{% block tw-image %}{{ profile.avatar }}{% endblock %}
 
 {% block content %}
 

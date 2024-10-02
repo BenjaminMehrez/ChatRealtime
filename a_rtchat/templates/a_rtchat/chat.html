@@ -1,5 +1,6 @@
 {% extends 'layouts/blank.html' %}
 
+{% block title %}{% if other_user %}{{ other_user }} | {% elif chat_group.groupchat_name %}{{ chat_group.groupchat_name }} | {% else %}{{ chat_group }} | {% endif %}{% endblock %}
 
 {% block content %}
 

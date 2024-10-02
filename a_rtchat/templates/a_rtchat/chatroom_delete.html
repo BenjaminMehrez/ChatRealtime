@@ -1,5 +1,6 @@
 {% extends 'layouts/box.html' %}
 
+{% block title %}Delete Chat | {% endblock %}
 
 {% block content %}
 
@@ -10,7 +11,7 @@
 <form method="POST">
     {% csrf_token %}
     <button class="button-red mt-4">Yes, delete</button>
-    <a class="button button-gray ml-1" href="{{ request.META.HTTP_REFERRER }}">Cancel</a>
+    <a class="button button-gray ml-1" href="{% url 'home' %}">Cancel</a>
 </form>
 
 {% endblock %}
