@@ -20,10 +20,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 from a_users.views import profile_view
 from a_home.views import *
+from django.views.generic.base import TemplateView
 
 
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('robots.txt/', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('theboss/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('',  include('a_rtchat.urls')),
